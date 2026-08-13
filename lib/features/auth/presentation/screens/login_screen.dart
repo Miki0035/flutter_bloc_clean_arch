@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 20),
 
-              AuthGradientButton(buttonText: 'Sign in'),
+              AuthGradientButton(buttonText: 'Sign in', onPressed: () {}),
               SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
