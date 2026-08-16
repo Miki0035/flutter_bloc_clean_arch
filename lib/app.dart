@@ -1,3 +1,4 @@
+import 'package:blog_app/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:blog_app/core/theme/theme.dart';
 import 'package:blog_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:blog_app/features/auth/presentation/screens/login_screen.dart';
@@ -23,7 +24,17 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: AppTheme.darkThemeMode,
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: BlocSelector<AppUserCubit, AppUserState, bool>(
+        selector: (state) {
+          return state is AppUserLoggedIn; // if true builder runs
+        },
+        builder: (context, isLoggedIn) {
+          if (isLoggedIn) {
+            return Scaffold(body: Center(child: Text('Logged In')));
+          }
+          return LoginScreen();
+        },
+      ),
     );
   }
 }
