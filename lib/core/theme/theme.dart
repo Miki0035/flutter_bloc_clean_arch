@@ -12,6 +12,7 @@ class AppTheme {
     appBarTheme: const AppBarTheme(backgroundColor: AppPallete.backgroundColor),
     chipTheme: const ChipThemeData(
       color: WidgetStatePropertyAll(AppPallete.backgroundColor),
+
       side: .none,
     ),
     inputDecorationTheme: InputDecorationTheme(
