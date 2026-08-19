@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 class BlogScreen extends StatelessWidget {
+  static MaterialPageRoute route() =>
+      MaterialPageRoute(builder: (context) => BlogScreen());
+
   const BlogScreen({super.key});
 
   @override

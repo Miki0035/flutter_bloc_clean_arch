@@ -15,6 +15,10 @@ class BlogEditor extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(hintText: hintText),
       maxLines: null, // goes to new line when text larger than width
+      validator: (value) {
+        if (value!.isEmpty) return '$hintText is empty';
+        return null;
+      },
     );
   }
 }
