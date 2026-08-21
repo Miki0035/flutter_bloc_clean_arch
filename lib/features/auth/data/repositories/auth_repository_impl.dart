@@ -1,15 +1,17 @@
 import 'package:blog_app/core/error/exception.dart';
 import 'package:blog_app/core/error/failure.dart';
+import 'package:blog_app/core/network/connection_checker.dart';
 import 'package:blog_app/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:blog_app/core/common/entities/user.dart';
+import 'package:blog_app/features/auth/data/models/user_model.dart';
 import 'package:blog_app/features/auth/domain/repository/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sb;
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDatasource remoteDatasource;
-
-  AuthRepositoryImpl(this.remoteDatasource);
+  final ConnectionChecker connectionChecker;
+  AuthRepositoryImpl(this.remoteDatasource, this.connectionChecker);
 
   @override
   Future<Either<Failure, User>> loginWithEmailPassword({
@@ -42,6 +44,9 @@ class AuthRepositoryImpl implements AuthRepository {
   // Wrapper function
   Future<Either<Failure, User>> _getUser(Future<User> Function() fn) async {
     try {
+      if (!await (connectionChecker.isConnected)) {
+        return left(Failure('No internet connection!'));
+      }
       final user = await fn();
       return right(user);
     } on sb.AuthException catch (e) {
@@ -54,6 +59,21 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, User>> currentUser() async {
     try {
+      if (!await (connectionChecker.isConnected)) {
+        // session can be accessed offline
+        final session = remoteDatasource.currentUserSession;
+        if (session == null) {
+          return left(Failure('User not logged in'));
+        }
+
+        return right(
+          UserModel(
+            email: session.user.email ?? '',
+            name: '',
+            id: session.user.id,
+          ),
+        );
+      }
       final user = await remoteDatasource.getCurrentUserData();
       if (user == null) {
         return left(Failure('User not logged in!'));
