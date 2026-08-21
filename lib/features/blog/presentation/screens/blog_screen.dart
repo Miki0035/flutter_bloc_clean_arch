@@ -54,7 +54,14 @@ class _BlogScreenState extends State<BlogScreen> {
               itemCount: state.blogs.length,
               itemBuilder: (context, index) {
                 final blog = state.blogs[index];
-                return BlogCard(blog: blog, color: AppPallete.gradient1);
+                return BlogCard(
+                  blog: blog,
+                  color: index % 3 == 0
+                      ? AppPallete.gradient1
+                      : index % 3 == 1
+                      ? AppPallete.gradient2
+                      : AppPallete.gradient3,
+                );
               },
             );
           }
