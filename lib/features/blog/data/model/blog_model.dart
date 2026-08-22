@@ -18,7 +18,7 @@ class BlogModel extends Blog {
       posterId: map['poster_id'] as String,
       title: map['title'] as String,
       content: map['content'] as String,
-      imageUrl: map['imageUrl'] as String,
+      imageUrl: map['image_url'] as String,
       topics: List<String>.from(map['topics'] ?? []),
       updatedAt: map['updated_at'] == null
           ? DateTime.now()
@@ -29,7 +29,6 @@ class BlogModel extends Blog {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'imageUrl': imageUrl,
       'title': title,
       'content': content,
       'image_url': imageUrl,

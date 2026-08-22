@@ -21,6 +21,7 @@ class BlogRemoteDatasourceImpl implements BlogRemoteDataSource {
   @override
   Future<BlogModel> uploadBlog(BlogModel blog) async {
     try {
+      print('new blog to be uploaded with imageURL ${blog.toJson()}');
       final blogData = await supabaseClient
           .from('blogs')
           .insert(blog.toJson())

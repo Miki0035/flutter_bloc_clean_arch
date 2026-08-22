@@ -13,7 +13,7 @@ class BlogViewerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: []),
+      appBar: AppBar(),
       body: Scrollbar(
         child: SingleChildScrollView(
           child: Padding(
@@ -48,7 +48,6 @@ class BlogViewerScreen extends StatelessWidget {
                 ),
 
                 SizedBox(height: 20),
-
                 Text(blog.content, style: TextStyle(fontSize: 16, height: 2)),
               ],
             ),

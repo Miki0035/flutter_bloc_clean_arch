@@ -36,7 +36,7 @@ class BlogRepositoryImpl implements BlogRepository {
         return left(Failure(Constants.noConnectionErrorMessage));
       }
 
-      final blogModel = BlogModel(
+      BlogModel blogModel = BlogModel(
         id: const Uuid().v1(),
         posterId: posterId,
         title: title,
@@ -50,9 +50,14 @@ class BlogRepositoryImpl implements BlogRepository {
         image: image,
         blog: blogModel,
       );
-      blogModel.copyWith(imageUrl: imageUrl);
+      print('blog image url $imageUrl');
+      blogModel = blogModel.copyWith(imageUrl: imageUrl);
 
+      print('copied blog model with imageUrl ${blogModel.toJson()}');
       final uploadedBlog = await blogRemoteDataSource.uploadBlog(blogModel);
+
+      print('uploaded blog ${uploadedBlog.toJson()}');
+
       return right(uploadedBlog);
     } on ServerException catch (e) {
       return left(Failure(e.message));

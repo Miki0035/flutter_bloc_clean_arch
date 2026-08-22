@@ -99,7 +99,9 @@ class _AddNewBlogScreenState extends State<AddNewBlogScreen> {
                 children: [
                   image == null
                       ? GestureDetector(
-                          onTap: selectImage,
+                          onTap: () {
+                            selectImage();
+                          },
                           child: DottedBorder(
                             options: RoundedRectDottedBorderOptions(
                               radius: .circular(10),
@@ -111,6 +113,7 @@ class _AddNewBlogScreenState extends State<AddNewBlogScreen> {
                               height: 150,
                               width: .infinity,
                               child: Column(
+                                mainAxisAlignment: .center,
                                 children: [
                                   Icon(Icons.folder_open, size: 40),
                                   SizedBox(height: 15),
