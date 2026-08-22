@@ -50,13 +50,9 @@ class BlogRepositoryImpl implements BlogRepository {
         image: image,
         blog: blogModel,
       );
-      print('blog image url $imageUrl');
       blogModel = blogModel.copyWith(imageUrl: imageUrl);
 
-      print('copied blog model with imageUrl ${blogModel.toJson()}');
       final uploadedBlog = await blogRemoteDataSource.uploadBlog(blogModel);
-
-      print('uploaded blog ${uploadedBlog.toJson()}');
 
       return right(uploadedBlog);
     } on ServerException catch (e) {
