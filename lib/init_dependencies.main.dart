@@ -12,7 +12,7 @@ Future<void> initDependencies() async {
 
   // HIVE
   Hive.defaultDirectory = (await getApplicationDocumentsDirectory()).path;
-  serviceLocator.registerLazySingleton(() => supabase.client);
+  serviceLocator.registerLazySingleton<SupabaseClient>(() => supabase.client);
   serviceLocator.registerLazySingleton(() => Hive.box(name: 'blogs'));
 
   // core
