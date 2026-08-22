@@ -5,12 +5,13 @@ import 'package:blog_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:blog_app/features/auth/presentation/screens/signup_screen.dart';
 import 'package:blog_app/features/auth/presentation/widgets/auth_field.dart';
 import 'package:blog_app/features/auth/presentation/widgets/auth_gradient_button.dart';
+import 'package:blog_app/features/blog/presentation/screens/blog_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   static MaterialPageRoute<dynamic> route() =>
-      MaterialPageRoute(builder: (_) => SignupScreen());
+      MaterialPageRoute(builder: (_) => LoginScreen());
 
   const LoginScreen({super.key});
 
@@ -40,6 +41,12 @@ class _LoginScreenState extends State<LoginScreen> {
           listener: (context, state) {
             if (state is AuthFailure) {
               showSnackbar(context, state.message);
+            } else if (state is AuthSuccess) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                BlogScreen.route(),
+                (route) => false,
+              );
             }
           },
           builder: (context, state) {
@@ -82,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 20),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, LoginScreen.route());
+                      Navigator.push(context, SignupScreen.route());
                     },
                     child: RichText(
                       text: TextSpan(
